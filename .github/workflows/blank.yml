@@ -23,9 +23,9 @@ jobs:
         continue-on-error: true
 
       - name: Run Docker container
-        run: docker run -d -p 8080:80 hello-world-nginx:v1
+        run: docker run -d -p 8081:80 hello-world-nginx:v1
 
       - name: Verify container is running
         run: |
           Start-Sleep -Seconds 3
-          curl.exe http://localhost:8080
+          curl.exe http://localhost:8081
