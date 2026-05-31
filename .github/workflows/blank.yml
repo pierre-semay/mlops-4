@@ -19,8 +19,9 @@ jobs:
           docker build -t hello-world-nginx:v1 -t hello-world-nginx:${{ github.ref_name }} -t hello-world-nginx:${{ github.sha }} .
 
       - name: Stop any existing containers
-        run: docker rm -f hello-world-nginx || true
-        
+        run: docker rm -f hello-world-nginx
+        continue-on-error: true
+
       - name: Run Docker container
         run: docker run -d -p 8080:80 hello-world-nginx:v1
 
