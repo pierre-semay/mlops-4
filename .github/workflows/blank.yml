@@ -11,19 +11,20 @@ jobs:
   first-pipeline:
     runs-on: ubuntu-24.04
     steps:
-      # Step 1: Check out code repository
       - name: Check out code repository
         uses: actions/checkout@v4
 
-      # Step 2: Build the Docker image
-      - name: Build Docker image
-        run: docker build -t hello-world-nginx:v1 .
+      - name: Build Docker image with branch and SHA tags
+        run: |
+          docker build \
+            -t hello-world-nginx:v1 \
+            -t hello-world-nginx:${{ github.ref_name }} \
+            -t hello-world-nginx:${{ github.sha }} \
+            .
 
-      # Step 3: Run the Docker container
       - name: Run Docker container
         run: docker run -d -p 8080:80 hello-world-nginx:v1
 
-      # Step 4: Verify the container is running
       - name: Verify container is running
         run: |
           sleep 3
