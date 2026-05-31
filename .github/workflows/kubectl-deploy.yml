@@ -1,0 +1,36 @@
+name: Kubectl Deploy
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  kubectl-deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Check out code repository
+        uses: actions/checkout@v4
+
+      - name: Generate random pod name and create manifest
+        run: |
+          $id = Get-Random
+          @"
+          apiVersion: v1
+          kind: Pod
+          metadata:
+            name: mypod-$id
+            namespace: pierre
+            labels:
+              name: mypod
+          spec:
+            containers:
+            - name: mypod
+              image: rancher/hello-world
+          "@ | Out-File -FilePath pod.yaml -Encoding utf8
+
+      - name: Apply Pod to Kubernetes
+        run: kubectl apply -f pod.yaml --kubeconfig $env:USERPROFILE\.kube\config
+
+      - name: Check pods in namespace
+        run: kubectl get pods -n pierre --kubeconfig $env:USERPROFILE\.kube\config
