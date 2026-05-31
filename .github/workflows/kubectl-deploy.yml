@@ -34,3 +34,12 @@ jobs:
 
       - name: Check pods in namespace
         run: kubectl get pods -n pierre --kubeconfig $env:USERPROFILE\.kube\config
+
+      - name: Apply Deployment
+        run: kubectl apply -f deployment.yaml --kubeconfig $env:USERPROFILE\.kube\config
+
+      - name: Rollout restart
+        run: kubectl rollout restart deployment/hello-world-deployment -n pierre --kubeconfig $env:USERPROFILE\.kube\config
+
+      - name: Check pods
+        run: kubectl get pods -n pierre --kubeconfig $env:USERPROFILE\.kube\config
