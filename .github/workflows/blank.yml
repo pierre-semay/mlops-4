@@ -23,5 +23,5 @@ jobs:
 
       - name: Verify container is running
         run: |
-          sleep 3
-          curl http://localhost:8080
+          Start-Sleep -Seconds 3
+          curl.exe http://localhost:8080
