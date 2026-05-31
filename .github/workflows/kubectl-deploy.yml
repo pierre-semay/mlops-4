@@ -43,3 +43,12 @@ jobs:
 
       - name: Check pods
         run: kubectl get pods -n pierre --kubeconfig $env:USERPROFILE\.kube\config
+
+      - name: Helm upgrade and install
+        run: helm upgrade --install hello-world-helm howest/example-v2 --namespace pierre --set image.tag=${{ github.sha }} --kubeconfig $env:USERPROFILE\.kube\config
+
+      - name: Check Helm releases
+        run: helm list -n pierre --kubeconfig $env:USERPROFILE\.kube\config
+
+      - name: Check pods after Helm install
+        run: kubectl get pods -n pierre --kubeconfig $env:USERPROFILE\.kube\config
