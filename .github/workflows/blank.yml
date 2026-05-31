@@ -16,11 +16,7 @@ jobs:
 
       - name: Build Docker image with branch and SHA tags
         run: |
-          docker build \
-            -t hello-world-nginx:v1 \
-            -t hello-world-nginx:${{ github.ref_name }} \
-            -t hello-world-nginx:${{ github.sha }} \
-            .
+          docker build -t hello-world-nginx:v1 -t hello-world-nginx:${{ github.ref_name }} -t hello-world-nginx:${{ github.sha }} .
 
       - name: Run Docker container
         run: docker run -d -p 8080:80 hello-world-nginx:v1
